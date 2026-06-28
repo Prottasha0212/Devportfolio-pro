@@ -1,7 +1,12 @@
-.env 
-*.env 
-server/serviceAccountKey.json 
-server/*.json 
-node_modules/ 
-client/node_modules/ 
-server/node_modules/ 
+# Environment variables
+.env
+*.env
+
+# Firebase Service Account
+server/serviceAccountKey.json
+server/*.json
+
+# Node modules
+node_modules/
+client/node_modules/
+server/node_modules/
