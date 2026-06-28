@@ -1,5 +1,11 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, GithubAuthProvider } from 'firebase/auth';
+import { 
+  getAuth, 
+  GithubAuthProvider, 
+  signInWithPopup,
+  signOut,
+  onAuthStateChanged
+} from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -15,3 +21,6 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const githubProvider = new GithubAuthProvider();
+
+// ✅ Firebase Auth functions export করো
+export { signInWithPopup, signOut, onAuthStateChanged };
