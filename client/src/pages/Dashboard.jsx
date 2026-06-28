@@ -3,6 +3,9 @@ import { auth, signOut } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+// Vercel Backend URL
+const BACKEND_URL = 'https://devportfolio-pro.vercel.app/api';
+
 export default function Dashboard() {
   const user = auth.currentUser;
   const navigate = useNavigate();
@@ -27,10 +30,12 @@ export default function Dashboard() {
     }
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:5000/api/github/repos?accessToken=${token}`);
+      // ✅ Vercel Backend URL ব্যবহার করো
+      const response = await axios.get(`${BACKEND_URL}/github/repos?accessToken=${token}`);
       setRepos(response.data);
       setSelectedRepos(response.data.map(repo => repo.id));
     } catch (error) {
+      console.error('Error fetching repos:', error);
       alert('Failed to fetch repositories. Check your token.');
     } finally {
       setLoading(false);
@@ -45,7 +50,8 @@ export default function Dashboard() {
 
   const generateAISummary = async (repo) => {
     try {
-      const response = await axios.post('http://localhost:5000/api/ai/summary', {
+      // ✅ Vercel Backend URL ব্যবহার করো
+      const response = await axios.post(`${BACKEND_URL}/ai/summary`, {
         repoName: repo.name,
         description: repo.description,
         language: repo.language
@@ -55,6 +61,7 @@ export default function Dashboard() {
       ));
       alert('✅ AI Summary generated!');
     } catch (error) {
+      console.error('AI Error:', error);
       alert('❌ Failed to generate summary.');
     }
   };
@@ -74,7 +81,8 @@ export default function Dashboard() {
       }));
 
     try {
-      await axios.post('http://localhost:5000/api/portfolio/save', {
+      // ✅ Vercel Backend URL ব্যবহার করো
+      await axios.post(`${BACKEND_URL}/portfolio/save`, {
         username: username,
         uid: user.uid,
         bio,
@@ -85,6 +93,7 @@ export default function Dashboard() {
       alert(`🎉 Portfolio published!`);
       navigate(`/${username}`);
     } catch (error) {
+      console.error('Publish error:', error);
       alert('❌ Failed to publish portfolio');
     }
   };
